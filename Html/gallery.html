@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Carousel</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="gallery-page">
+    <header class="site-nav" aria-label="Main navigation">
+        <nav class="nav-links">
+            <a href="../index.html">Home</a>
+            <a class="current" href="gallery.html">Gallery</a>
+            <a href="aboutme.html">About Me</a>
+        </nav>
+    </header>
+
+    <div class="main-body">
+        <main class="carousel" aria-label="Image carousel">
+            <div class="viewport">
+                <div class="track" id="track">
+                    <figure class="slide">
+                        <img src="https://scontent-lax3-2.xx.fbcdn.net/v/t39.30808-6/484119028_567323506338121_5532754901695154626_n.jpg?_nc_cat=100&ccb=1-7&_nc_sid=7b2446&_nc_ohc=ronUVVEzs9gQ7kNvwFGAatQ&_nc_oc=Ado5DmiRZ8eMvshfTXJ2ZYY0VSKY8HoRFf8R7fq9JyuNFPMpPCTYha19jWxmqKI9gHQ&_nc_zt=23&_nc_ht=scontent-lax3-2.xx&_nc_gid=admD9vGM28lBq5zljqxRRQ&_nc_ss=7a3a8&oh=00_Af2k2fEKSJDK5wGHVSjE__AfWY4aoJMtSUrbvurX6lmSew&oe=69DB3028" alt="Gallery image 1">
+                    </figure>
+                    <figure class="slide">
+                        <img src="https://scontent-lax3-1.xx.fbcdn.net/v/t39.30808-6/481206989_557066527363819_4366272268619127642_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=7b2446&_nc_ohc=URD_apNQq8cQ7kNvwGzfhmM&_nc_oc=AdqkIi2RDEKlK15I9n8Uz4liyVOYxxCp3--NPlH7LyTsNwNlWENNOT5L0pORM69UiNU&_nc_zt=23&_nc_ht=scontent-lax3-1.xx&_nc_gid=kQyaeAznK6BteQvHmSLkig&_nc_ss=7a3a8&oh=00_Af3YQ6GSwxYOebgVavwgEnbScSVHwrfXx_IqnAJcGi2hrw&oe=69DB40B6" alt="Gallery image 2">
+                    </figure>
+                    <figure class="slide">
+                        <img src="https://scontent-lax3-1.xx.fbcdn.net/v/t39.30808-6/438862293_345144115222729_7720350716866546043_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=53a332&_nc_ohc=IJTdx7yqKJYQ7kNvwEHJuuC&_nc_oc=AdpVRKtAAFpV_9br9qd4qv1jgoabETnxsT04OJkoX0n1oMdJT08XxkjV-8tRuEJSbYk&_nc_zt=23&_nc_ht=scontent-lax3-1.xx&_nc_gid=anl60e70OSIjrtnF1k6OXg&_nc_ss=7a3a8&oh=00_Af30hSfVU1nG8sJXrQ5lR4YqmyOjSLqp57Xkz2ncWTdL6g&oe=69DB17B4" alt="Gallery image 3">
+                    </figure>
+                </div>
+            </div>
+
+            <div class="controls">
+                <button id="prev" type="button" aria-label="Previous image">Prev</button>
+                <button id="next" type="button" aria-label="Next image">Next</button>
+            </div>
+
+            <div class="dots" id="dots" aria-label="Slide indicators"></div>
+            <a class="page-link" href="../index.html">Back to Home Page</a>
+        </main>
+    </div>
+
+    <div class="site-footer">Jessica + Eric Forever</div>
+
+    <script>
+        const track = document.getElementById("track");
+        const slides = Array.from(track.children);
+        const prevBtn = document.getElementById("prev");
+        const nextBtn = document.getElementById("next");
+        const dotsWrap = document.getElementById("dots");
+        let index = 0;
+
+        function renderDots() {
+            dotsWrap.innerHTML = "";
+            slides.forEach((_, i) => {
+                const dot = document.createElement("button");
+                dot.className = "dot" + (i === index ? " active" : "");
+                dot.type = "button";
+                dot.ariaLabel = "Go to image " + (i + 1);
+                dot.addEventListener("click", () => goTo(i));
+                dotsWrap.appendChild(dot);
+            });
+        }
+
+        function goTo(i) {
+            index = (i + slides.length) % slides.length;
+            track.style.transform = `translateX(-${index * 100}%)`;
+            renderDots();
+        }
+
+        prevBtn.addEventListener("click", () => goTo(index - 1));
+        nextBtn.addEventListener("click", () => goTo(index + 1));
+
+        renderDots();
+    </script>
+</body>
+</html>
